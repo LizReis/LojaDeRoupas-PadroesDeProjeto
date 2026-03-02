@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="433.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.GerenciamentoClienteController">
+   <children>
+      <!-- Título -->
+      <Label fx:id="lblTitulo" text="Título" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+
+      <!-- Tabela -->
+      <TableView fx:id="tabelaGerenciarClientes" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="50.0">
+         <columns>
+            <TableColumn fx:id="colunaClienteNome" prefWidth="190.0" text="Nome" />
+            <TableColumn fx:id="colunaClienteLogin" prefWidth="127.0" text="Login" />
+            <TableColumn fx:id="colunaClienteDataCriacao" prefWidth="111.0" text="DataCriação" />
+            <TableColumn fx:id="colunaClienteDataAtualizacao" prefWidth="121.0" text="DataAtualização" />
+            <TableColumn fx:id="colunaClienteCriadoPor" prefWidth="127.0" text="CriadoPor" />
+            <TableColumn fx:id="colunaClienteAtualizadoPor" prefWidth="137.0" text="AtualizadoPor" />
+         </columns>
+      </TableView>
+
+      <!-- Botões inferiores -->
+      <Button fx:id="btnCadastrarCliente" onAction="#cadastrarCliente" text="Cadastrar Cliente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
+
+      <Button fx:id="btnAtualizarCliente" onAction="#atualizarCliente" text="Atualizar Cliente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="180.0" />
+
+      <Button fx:id="btnRemoverCliente" onAction="#removerCliente" text="Remover Cliente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="340.0" />
+
+      <Button fx:id="btnVoltar" onAction="#voltar" text="Voltar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+   </children>
+</AnchorPane>

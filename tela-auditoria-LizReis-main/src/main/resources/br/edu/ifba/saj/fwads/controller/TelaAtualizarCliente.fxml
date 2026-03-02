@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #fdfdfd; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #dddddd;"
+            prefHeight="365.0" prefWidth="860.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifba.saj.fwads.controller.AtualizarClienteController">
+
+    <children>
+        <VBox spacing="20.0" layoutX="0.0" layoutY="0.0" prefWidth="860.0" alignment="TOP_CENTER">
+
+            <!-- Título -->
+            <VBox alignment="CENTER">
+                <Label text="Atualizar Cliente">
+                    <font>
+                        <Font name="System Bold" size="35.0" />
+                    </font>
+                </Label>
+            </VBox>
+
+            <!-- Separador -->
+            <Separator prefWidth="860.0"
+                       style="-fx-background-color: transparent; -fx-border-color: #cccccc;" />
+
+            <!-- Info Cliente -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <Label text="Cliente:">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblNomeCliente" text="...">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Campo Nome -->
+            <VBox spacing="10.0" alignment="CENTER">
+                <Label text="Novo nome:">
+                    <font>
+                        <Font  size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtNomeCliente" prefHeight="30.0" prefWidth="200.0"
+                           style="-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            </VBox>
+
+            <!-- Botões -->
+            <HBox spacing="20.0" alignment="CENTER">
+                <Button fx:id="btnAtualizar" text="Atualizar" prefWidth="100"
+                        onAction="#atualizarCliente"
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" />
+
+                <Button fx:id="btnCancelar" text="Cancelar" prefWidth="100"
+                        onAction="#cancelar"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;" />
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>

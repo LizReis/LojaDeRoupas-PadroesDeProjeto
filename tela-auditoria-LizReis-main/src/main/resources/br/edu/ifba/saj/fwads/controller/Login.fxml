@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.LoginController">
+   <items>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf7c76" height="398.0" layoutX="-1.0" stroke="#bf7c76" strokeType="INSIDE" width="315.0" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/if.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="79.0" layoutY="63.0" text="Bem-vindo ao" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="156.0" layoutY="164.0" text="STORE" textFill="WHITE">
+               <font>
+                  <Font name="Garamond" size="36.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsuario" layoutX="341.0" layoutY="137.0" prefHeight="25.0" prefWidth="231.0" />
+            <Label layoutX="341.0" layoutY="120.0" text="Nome de usuário" />
+            <Label layoutX="341.0" layoutY="176.0" text="Senha" />
+            <Button fx:id="btnEntrar" layoutX="524.0" layoutY="242.0" mnemonicParsing="false" onAction="#entrar" text="Entrar" />
+            <Button fx:id="btnAuditoria" layoutX="524.0" layoutY="280.0" mnemonicParsing="false" onAction="#verAuditorias" text="Auditorias" />
+
+            <!-- Agrupamento Responsivo -->
+            <AnchorPane layoutX="329.0" layoutY="317.0" AnchorPane.bottomAnchor="250.0">
+               <HBox spacing="10.0">
+                  <children>
+                     <Hyperlink fx:id="linkCadastroCliente" onAction="#mudarTelaCadastroCliente" prefHeight="17.0" prefWidth="90.0" text="Cadastrar cliente">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Hyperlink>
+                     <Hyperlink fx:id="linkCadastroFuncionario" onAction="#mudarTelaCadastroFuncionario" prefHeight="17.0" prefWidth="115.0" text="Cadastrar funcionario">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Hyperlink>
+                  </children>
+               </HBox>
+            </AnchorPane>
+
+            <Label layoutX="416.0" layoutY="55.0" text="Login">
+               <font>
+                  <Font name="Arial Black" size="24.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtSenha" layoutX="342.0" layoutY="193.0" prefHeight="25.0" prefWidth="231.0" />
+            <ChoiceBox fx:id="choiceEntrar" layoutX="341.0" layoutY="242.0" prefHeight="25.0" prefWidth="115.0" />
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
