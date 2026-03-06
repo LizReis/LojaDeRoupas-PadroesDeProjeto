@@ -18,7 +18,7 @@ public class ValidaDepartamento {
         if(departamento == null || departamento.getNomeDepartamento().trim().isEmpty()){
             throw new CadastroDepartamentoException("Digite o nome do departamento!");
         }else if(!daoDepartamentos.buscarPorNome(departamento.getNomeDepartamento()).isPresent()){
-            daoDepartamentos.salvar(departamento, SessaoUsuario.getFuncionarioLogado());
+            daoDepartamentos.salvar(departamento, SessaoUsuario.getInstance().getFuncionarioLogado());
 
             return true;
         }
@@ -36,7 +36,7 @@ public class ValidaDepartamento {
             throw new ValidarAtualizacaoException("Esse departamento já existe.");
         }else{
             departamentoAtual.setNomeDepartamento(novoNomeDepartamento);
-            daoDepartamentos.atualizar(departamentoAtual, SessaoUsuario.getFuncionarioLogado());
+            daoDepartamentos.atualizar(departamentoAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
     }

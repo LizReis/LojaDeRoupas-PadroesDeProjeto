@@ -40,7 +40,7 @@ public class MasterFuncionarioController {
     //Método do botão de logout que chama o logout de sessão usuario e volta para a tela de login
     @FXML
     void logout(ActionEvent event) {
-        SessaoUsuario.logout();
+        SessaoUsuario.getInstance().logout();
         App.setRoot("controller/Login.fxml");
     }
 

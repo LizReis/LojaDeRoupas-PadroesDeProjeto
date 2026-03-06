@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane style="-fx-background-color: #fdfdfd; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #dddddd;"
+      prefHeight="365.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="br.edu.ifba.saj.fwads.controller.CadastroClienteController">
+   <children>
+      <Label layoutX="270.0" layoutY="14.0" text="Cadastrar Cliente" textFill="#333333">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+
+      <Separator layoutX="0.0" layoutY="70.0" prefHeight="0.0" prefWidth="860.0"
+                 style="-fx-background-color: transparent; -fx-border-color: #cccccc;" />
+
+      <Label layoutX="225.0" layoutY="139.0" text="Nome:" textFill="#555555">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="225.0" layoutY="183.0" text="Login:" textFill="#555555">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="225.0" layoutY="228.0" text="Senha:" textFill="#555555">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
+      <TextField fx:id="txtNomeCliente" layoutX="300.0" layoutY="142.0" prefHeight="30.0" prefWidth="320.0"
+                 style="-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+      <TextField fx:id="txtLoginCliente" layoutX="300.0" layoutY="186.0" prefHeight="30.0" prefWidth="320.0"
+                 style="-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+      <TextField fx:id="txtSenhaCliente" layoutX="300.0" layoutY="231.0" prefHeight="30.0" prefWidth="320.0"
+                 style="-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
+      <Button fx:id="btnCadastrarCliente" layoutX="300.0" layoutY="297.0" mnemonicParsing="false" onAction="#cadastrarCliente" text="Cadastrar"
+              style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+
+      <Button fx:id="btnCancelar" layoutX="445.0" layoutY="297.0" mnemonicParsing="false" text="Cancelar" onAction="#cancelar"
+              style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-cursor: hand;">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

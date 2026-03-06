@@ -57,7 +57,7 @@ public class ProdutosDeDepartamentoController {
     //Instancia de valida carrinhos para chamar metodos
     private ValidaCarrinhos validaCarrinhos = new ValidaCarrinhos();
     //variavel que armazena o cliente que estálogado no sistema
-    Cliente clienteLogado = (Cliente) SessaoUsuario.getClienteLogado();
+    Cliente clienteLogado = (Cliente) SessaoUsuario.getInstance().getClienteLogado();
     
     ////Esse set é apenas um método para mudar o departamento quando o cliente seleciona para ver um novo departamento
     public void setDepartamento(Departamento departamento) {

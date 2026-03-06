@@ -5,7 +5,62 @@ import java.util.Optional;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Cliente;
 
-public class SessaoUsuario {
+public class SessaoUsuario{
+    private static SessaoUsuario instance;
+
+    private Funcionario funcionarioLogado;
+    private Cliente clienteLogado;
+
+    private SessaoUsuario(){
+    }
+
+    public static SessaoUsuario getInstance(){
+        if (instance == null) {
+            instance = new SessaoUsuario();
+        }
+        return instance;
+    }
+
+    public Optional<Funcionario> getFuncionarioLogado() {
+        return Optional.ofNullable(funcionarioLogado);
+    }
+
+    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+        // Agora precisamos do this, pois estamos lidando com a instância
+        this.funcionarioLogado = funcionarioLogado;
+    }
+
+    public void logout() {
+        this.funcionarioLogado = null;
+    }
+
+    public Cliente getClienteLogado() {
+        return clienteLogado;
+    }
+
+    public void setClienteLogado(Cliente clienteLogado) {
+        this.clienteLogado = clienteLogado;
+    }
+
+    public void logoutCliente() {
+        this.clienteLogado = null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*public class SessaoUsuario {
     //Crio uma variavel estática (que pode ser usada em todo pacote sem instanciar sempre)
     //de funcionário
     private static Funcionario funcionarioLogado;
@@ -42,3 +97,5 @@ public class SessaoUsuario {
     }
 
 }
+
+*/

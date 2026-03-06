@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="433.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.MeuMasterController">
+   <children>
+      <Button fx:id="btnDepartamentos" mnemonicParsing="false" onAction="#mostrarDepartamentos" prefHeight="42.0" prefWidth="400" text="Departamentos" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+
+      <Button fx:id="btnSeusCarrinhos" mnemonicParsing="false" onAction="#mostrarSeusCarrinhos" prefHeight="42.0" prefWidth="400" text="Seus Carrinhos" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+
+      <Label prefHeight="51.0" prefWidth="305.0" text="Conheça os nossos" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="161.0">
+         <font>
+            <Font name="System Bold Italic" size="35.0" />
+         </font>
+      </Label>
+
+      <Label prefHeight="0.0" prefWidth="275.0" text="Explore as nossas seções acima" AnchorPane.leftAnchor="43.0" AnchorPane.topAnchor="260.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+
+      <Label prefHeight="65.0" prefWidth="112.0" text="store" textFill="#4f9a44" AnchorPane.leftAnchor="183.0" AnchorPane.topAnchor="72.0">
+         <font>
+            <Font name="Garamond" size="55.0" />
+         </font>
+      </Label>
+
+      <Label prefHeight="45.0" prefWidth="260.0" text="produtos" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="209.0">
+         <font>
+            <Font name="System Bold Italic" size="35.0" />
+         </font>
+      </Label>
+
+      <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#sairSistema" prefHeight="27.0" prefWidth="85.0" text="LOGOUT" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="333.0" />
+
+      <Label prefHeight="17.0" prefWidth="90.0" text="Sair do sistema?" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="366.0" />
+
+      <ImageView fitHeight="165.0" fitWidth="254.0" preserveRatio="true" AnchorPane.leftAnchor="426.0" AnchorPane.topAnchor="251.0">
+         <image>
+            <Image url="@assets/pretty-stylish-black-girl-green-jacket-posing-pink-background-winter-spring-fashion-look.jpg" />
+         </image>
+      </ImageView>
+
+      <ImageView fitHeight="207.0" fitWidth="141.0" preserveRatio="true" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="58.0">
+         <image>
+            <Image url="@assets/young-man-portrait.jpg" />
+         </image>
+      </ImageView>
+
+      <ImageView fitHeight="132.0" fitWidth="133.0" preserveRatio="true" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="121.0">
+         <image>
+            <Image url="@assets/asian-girl-doing-heart-with-her-hands.jpg" />
+         </image>
+      </ImageView>
+
+      <ImageView fitHeight="122.0" fitWidth="145.0" preserveRatio="true" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="44.0">
+         <image>
+            <Image url="@assets/if.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

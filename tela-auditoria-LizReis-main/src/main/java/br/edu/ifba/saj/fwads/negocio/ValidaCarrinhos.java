@@ -25,7 +25,7 @@ public class ValidaCarrinhos {
 
         if(carrinhosDoCliente.isEmpty()){
             Carrinho novoCarrinho = cliente.criarCarrinho("Carrinho Padrão");
-            daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getFuncionarioLogado());
+            daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getInstance().getFuncionarioLogado());
 
             novoCarrinho.adicionarItem(new ItemCompra(produto, quantidade));
             return novoCarrinho;
@@ -45,7 +45,7 @@ public class ValidaCarrinhos {
             }
         }else{
             Carrinho novoCarrinho = cliente.criarCarrinho(nomeCarrinho);
-            daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getFuncionarioLogado());
+            daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getInstance().getFuncionarioLogado());
 
             novoCarrinho.adicionarItem(new ItemCompra(produto, quantidade));
 

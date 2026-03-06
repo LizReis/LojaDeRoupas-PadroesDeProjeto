@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane fx:id="tituloPaneCarrinho" animated="false" prefHeight="418.0" prefWidth="600.0" text="Carrinho"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifba.saj.fwads.controller.CarrinhoDeComprasController">
+    <content>
+        <AnchorPane>
+            <children>
+                <TableView fx:id="tabelaCarrinhoCompras"
+                           AnchorPane.topAnchor="0.0"
+                           AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0"
+                           AnchorPane.bottomAnchor="90.0">
+                    <columns>
+                        <TableColumn fx:id="colunaProdutoCarrinhoCompra" prefWidth="297.0" text="Produto" />
+                        <TableColumn fx:id="colunaQuantidadeCarrinhoCompra" prefWidth="118.0" text="Quantidade" />
+                        <TableColumn fx:id="colunaPrecoCarrinhoCompra" prefWidth="86.0" text="Preço" />
+                        <TableColumn fx:id="colunaAcoesCarrinhoCompra" prefWidth="96.0" text="Ações" />
+                    </columns>
+                </TableView>
+
+                <!-- Label Valor Total acima do botão Finalizar -->
+                <Label text="Valor Total:"
+                       AnchorPane.rightAnchor="135.0"
+                       AnchorPane.bottomAnchor="50.0">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <Label fx:id="lblValorTotalCompra" text="R$ 0,00"
+                       AnchorPane.rightAnchor="20.0"
+                       AnchorPane.bottomAnchor="50.0"
+                >
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+
+                <Button fx:id="btnFinalizarCompra"
+                        text="Finalizar Compra"
+                        onAction="#finalizarCompra"
+                        style="-fx-border-color: black;"
+                        AnchorPane.rightAnchor="20.0"
+                        AnchorPane.bottomAnchor="10.0">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="btnRemoverItem"
+                        text="Remover Item"
+                        onAction="#removerItem"
+                        style="-fx-border-color: black;"
+                        AnchorPane.rightAnchor="140.0"
+                        AnchorPane.bottomAnchor="10.0">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="btnVoltar"
+                        text="Voltar"
+                        onAction="#voltar"
+                        AnchorPane.leftAnchor="20.0"
+                        AnchorPane.bottomAnchor="18.0" />
+            </children>
+        </AnchorPane>
+    </content>
+</TitledPane>

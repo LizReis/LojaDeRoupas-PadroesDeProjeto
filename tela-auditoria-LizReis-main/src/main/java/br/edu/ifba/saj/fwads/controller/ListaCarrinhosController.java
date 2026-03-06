@@ -45,7 +45,7 @@ public class ListaCarrinhosController {
     //Instancia de valida carrinhos para chamar métodos
     ValidaCarrinhos validaCarrinhos = new ValidaCarrinhos();
     //Variavel que armazena o cliente logado no sistema para poder acessar seus carrinhos
-    Cliente clienteLogado = (Cliente) SessaoUsuario.getClienteLogado();
+    Cliente clienteLogado = (Cliente) SessaoUsuario.getInstance().getClienteLogado();
     //ObservableList armazena a lista de carrinhos do sistema
     ObservableList<Carrinho> listaCarrinhos = FXCollections.observableArrayList(validaCarrinhos.listarCarrinhos());
 

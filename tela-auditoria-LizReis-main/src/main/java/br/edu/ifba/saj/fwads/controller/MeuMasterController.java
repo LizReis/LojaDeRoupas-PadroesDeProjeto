@@ -28,7 +28,7 @@ public class MeuMasterController {
     //Método do botão logout que o cliente termina sua sessão e vai para a tela de login
     @FXML
     void sairSistema(ActionEvent event){
-        SessaoUsuario.logoutCliente();
+        SessaoUsuario.getInstance().logoutCliente();
         App.setRoot("controller/Login.fxml");
     }
     //Método estático usado para tirar repetição da tela de erro

@@ -28,7 +28,7 @@ public class ValidaUsuario{
         }else if(novoCliente.getSenha() == null || novoCliente.getSenha().trim().isEmpty()){
             throw new CadastroUsuarioException("Digite a senha!");
         }else{
-            daoUsuarios.salvar(novoCliente, SessaoUsuario.getFuncionarioLogado());
+            daoUsuarios.salvar(novoCliente, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
     }
@@ -47,7 +47,7 @@ public class ValidaUsuario{
         }else if(novoFuncionario.getSetorTrabalho() == null || novoFuncionario.getSetorTrabalho().trim().isEmpty()){
             throw new CadastroUsuarioException("Digite o setor de trabalho!");
         }else{
-            daoUsuarios.salvar(novoFuncionario, SessaoUsuario.getFuncionarioLogado());
+            daoUsuarios.salvar(novoFuncionario, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
     }
@@ -62,10 +62,10 @@ public class ValidaUsuario{
                 //caso ele faça algum cadastro ou alteração
                 if("Funcionário".equals(choiceTipo) && usuario instanceof Funcionario){
                     //Como essa validação de login é para cliente e funcionario, ent o que tem na variavel "usuario" tem que ser convertida para Funcionario
-                    SessaoUsuario.setFuncionarioLogado((Funcionario) usuario);
+                    SessaoUsuario.getInstance().setFuncionarioLogado((Funcionario) usuario);
                     return usuario;
                 }else if("Cliente".equals(choiceTipo) && usuario instanceof Cliente){
-                    SessaoUsuario.setClienteLogado((Cliente) usuario);
+                    SessaoUsuario.getInstance().setClienteLogado((Cliente) usuario);
                     return usuario;
                 }
             }
@@ -87,7 +87,7 @@ public class ValidaUsuario{
             }else{
                 funcionario.setNome(novoNome);
                 funcionario.setSetorTrabalho(novoSetor);
-                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getFuncionarioLogado());
+                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
                 return true;
             }
         }else if(usuarioAtual instanceof Cliente cliente){
@@ -95,7 +95,7 @@ public class ValidaUsuario{
                 throw new ValidarAtualizacaoException("Digite o novo nome!");
             }else{
                 cliente.setNome(novoNome);
-                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getFuncionarioLogado());
+                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
                 return true;
             }
         }

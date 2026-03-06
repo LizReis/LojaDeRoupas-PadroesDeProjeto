@@ -25,7 +25,7 @@ public class ValidaProduto {
         }else if(produto.getDepartamento() == null){
             throw new CadastroProdutoException("Selecione ou crie um departamento antes de cadastrar produto.");
         }else{
-            daoProdutos.salvar(produto, SessaoUsuario.getFuncionarioLogado());
+            daoProdutos.salvar(produto, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
         
@@ -40,7 +40,7 @@ public class ValidaProduto {
             throw new NumberFormatException("Digite um valor válido para o preço.");
         }else{
             produtoAtual.setPreco(preco);
-            daoProdutos.atualizar(produtoAtual, SessaoUsuario.getFuncionarioLogado());
+            daoProdutos.atualizar(produtoAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
     }
