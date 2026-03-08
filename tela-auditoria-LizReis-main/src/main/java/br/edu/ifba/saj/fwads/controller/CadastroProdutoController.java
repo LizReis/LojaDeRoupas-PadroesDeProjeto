@@ -61,7 +61,15 @@ public class CadastroProdutoController {
         String departamentoEscolhinho = choiceDepartamento.getValue();
 
         try{
-            validaProduto.validaCadastroProduto(new Produto(txtModelo.getText(), txtTamanho.getText(), txtCor.getText(), Float.parseFloat(txtPreco.getText()), validaDepartamento.buscarPeloNome(departamentoEscolhinho)));
+            Produto novoProduto = Produto.builder()
+                    .modelo(txtModelo.getText())
+                    .tamanho(txtTamanho.getText())
+                    .cor(txtCor.getText())
+                    .preco(Float.parseFloat(txtPreco.getText()))
+                    .departamento(validaDepartamento.buscarPeloNome(departamentoEscolhinho))
+                    .build();
+
+            validaProduto.validaCadastroProduto(novoProduto);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Sucesso");
             alert.setHeaderText(null);

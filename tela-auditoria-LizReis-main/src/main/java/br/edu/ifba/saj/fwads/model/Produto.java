@@ -7,12 +7,16 @@ public class  Produto extends AbstractModel<UUID>{
     private float preco;
     private Departamento departamento;
     
-    public Produto(String modelo, String cor, String tamanho, float preco, Departamento departamento){
-        this.setModelo(modelo);
-        this.setCor(cor);
-        this.setTamanho(tamanho);
-        this.setPreco(preco);
-        this.setDepartamento(departamento);
+    private Produto(Builder builder){
+        this.setModelo(builder.modelo);
+        this.setCor(builder.cor);
+        this.setTamanho(builder.tamanho);
+        this.setPreco(builder.preco);
+        this.setDepartamento(builder.departamento);
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
     
     public String getModelo() {
@@ -53,5 +57,41 @@ public class  Produto extends AbstractModel<UUID>{
     public String descricaoProduto(){
         return "{\n" + getModelo() + " " + getTamanho() + " " + getCor() + "\n}";
     }
-    
+
+    public static class Builder {
+        private String modelo;
+        private String tamanho;
+        private String cor;
+        private float preco;
+        private Departamento departamento;
+
+        public Builder modelo(String modelo) {
+            this.modelo = modelo;
+            return this;
+        }
+
+        public Builder tamanho(String tamanho) {
+            this.tamanho = tamanho;
+            return this;
+        }
+
+        public Builder cor(String cor) {
+            this.cor = cor;
+            return this;
+        }
+
+        public Builder preco(float preco) {
+            this.preco = preco;
+            return this;
+        }
+
+        public Builder departamento(Departamento departamento) {
+            this.departamento = departamento;
+            return this;
+        }
+
+        public Produto build() {
+            return new Produto(this);
+        }
+    }
 }

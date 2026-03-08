@@ -30,7 +30,13 @@ public class Departamento extends AbstractModel<UUID>{
     }
 
     public Produto adicionarProduto(String modelo, String cor, String tamanho, float preco, Departamento departamento){
-        Produto novoProduto = new Produto(modelo, cor, tamanho, preco, departamento);
+        Produto novoProduto = Produto.builder()
+                .modelo(modelo)
+                .cor(cor)
+                .tamanho(tamanho)
+                .preco(preco)
+                .departamento(departamento)
+                .build();
         produtos.add(novoProduto);
         
         return novoProduto;
