@@ -1,7 +1,9 @@
 package br.edu.ifba.saj.fwads.negocio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.edu.ifba.saj.fwads.dao.UsuarioDAO;
 import br.edu.ifba.saj.fwads.exception.CadastroUsuarioException;
@@ -11,46 +13,49 @@ import br.edu.ifba.saj.fwads.exception.ValidarAtualizacaoException;
 import br.edu.ifba.saj.fwads.model.Cliente;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Usuario;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.AtualizaFuncionarioStrategy;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.AtualizarClienteStrategy;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.StrategyAtualizaUsuario;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.StrategyValidaCadastro;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.ValidaCadastroCliente;
+import br.edu.ifba.saj.fwads.negocio.STRATEGY.ValidaCadastroFuncionario;
 
 
 public class ValidaUsuario{
     
     public static final UsuarioDAO daoUsuarios = new UsuarioDAO();
 
-    //Valida cadastro de um cliente
-    public boolean validaCadastroCliente(Cliente novoCliente) throws CadastroUsuarioException{
-        if(novoCliente == null){
-            throw new CadastroUsuarioException("Cliente é nulo.");
-        }else if(novoCliente.getNome() == null || novoCliente.getNome().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite o nome!");
-        }else if(novoCliente.getLogin() == null || novoCliente.getLogin().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite o login!");
-        }else if(novoCliente.getSenha() == null || novoCliente.getSenha().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite a senha!");
-        }else{
-            daoUsuarios.salvar(novoCliente, SessaoUsuario.getInstance().getFuncionarioLogado());
-            return true;
-        }
-    }
-    //------------------------------------------------------------------------------
+    private final Map<Class<? extends Usuario>, StrategyAtualizaUsuario> estrategiasAtualizar = new HashMap<>();
 
-    //Valida cadastro de um funcionario
-    public boolean validaCadastroFuncionario(Funcionario novoFuncionario) throws CadastroUsuarioException{
-        if(novoFuncionario == null){
-            throw new CadastroUsuarioException("Funcionário é nulo.");
-        }else if(novoFuncionario.getNome() == null || novoFuncionario.getNome().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite o nome!");
-        }else if(novoFuncionario.getLogin() == null || novoFuncionario.getLogin().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite o login!");
-        }else if(novoFuncionario.getSenha() == null || novoFuncionario.getSenha().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite a senha!");
-        }else if(novoFuncionario.getSetorTrabalho() == null || novoFuncionario.getSetorTrabalho().trim().isEmpty()){
-            throw new CadastroUsuarioException("Digite o setor de trabalho!");
-        }else{
-            daoUsuarios.salvar(novoFuncionario, SessaoUsuario.getInstance().getFuncionarioLogado());
-            return true;
-        }
+    private final Map<Class<? extends Usuario>, StrategyValidaCadastro> estrategiasValidaCadastro = new HashMap<>();
+
+    //Método que permite adicionar a estratégia logo quando a classe é criada
+    //Isso é necessário porque não é o usuário que escolhe a estratégia diretamente no sistema
+    public ValidaUsuario(){
+        estrategiasAtualizar.put(Funcionario.class, new AtualizaFuncionarioStrategy());
+        estrategiasAtualizar.put(Cliente.class, new AtualizarClienteStrategy());
+
+        estrategiasValidaCadastro.put(Funcionario.class, new ValidaCadastroFuncionario());
+        estrategiasValidaCadastro.put(Cliente.class, new ValidaCadastroCliente());
     }
+
+
+    //COM O STRATEGY
+    //Removemos os dois métodos de validação + cadastro
+    //Agora apenas chamamos as estratégias para cada tipo de usuário
+    public boolean validaCadastro(Usuario usuario) throws CadastroUsuarioException{
+        if (usuario == null) {
+            throw new CadastroUsuarioException("Usuário é nulo.");
+        }
+
+        StrategyValidaCadastro estrategia = estrategiasValidaCadastro.get(usuario.getClass());
+
+        if(estrategia != null){
+            return estrategia.validaECadastra(usuario);
+        }
+
+        throw new CadastroUsuarioException("Tipo de usuário não suportado para cadastro!");
+    }   
     //-------------------------------------------------------------------------------
 
     //Valida login de cliente e funcionario
@@ -75,30 +80,20 @@ public class ValidaUsuario{
     }
     //----------------------------------------------------------------------------------
 
-    //Valida atualização de cliente ou funcionario
+    //COM O STRATEGY
+    //O método atualizar ficou bem mais simples, passando apenas o tipo da classe do usuário
+    //deixando a lógica para as classes que implementam StrategyAtualizaUsuario
     public Boolean validaAtualizacao(Usuario usuarioAtual, String novoNome, String novoSetor) throws ValidarAtualizacaoException{
         if(usuarioAtual == null){
             throw new ValidarAtualizacaoException("Selecione para atualizar.");
-        }else if(usuarioAtual instanceof Funcionario funcionario){
-            if(novoNome == null || novoNome.trim().isEmpty()){
-                throw new ValidarAtualizacaoException("Digite o novo nome!");
-            }else if(novoSetor == null || novoSetor.trim().isEmpty()){
-                throw new ValidarAtualizacaoException("Digite o novo setor de trabalho!");
-            }else{
-                funcionario.setNome(novoNome);
-                funcionario.setSetorTrabalho(novoSetor);
-                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
-                return true;
-            }
-        }else if(usuarioAtual instanceof Cliente cliente){
-            if(novoNome == null || novoNome.trim().isEmpty()){
-                throw new ValidarAtualizacaoException("Digite o novo nome!");
-            }else{
-                cliente.setNome(novoNome);
-                daoUsuarios.atualizar(usuarioAtual, SessaoUsuario.getInstance().getFuncionarioLogado());
-                return true;
-            }
         }
+
+        StrategyAtualizaUsuario estrategia = estrategiasAtualizar.get(usuarioAtual.getClass());
+
+        if (estrategia != null) {
+            return estrategia.validarAtualizar(usuarioAtual, novoNome, novoSetor);
+        }
+
         throw new ValidarAtualizacaoException("Algo deu errado!");
     }
     //------------------------------------------------------------------------------------

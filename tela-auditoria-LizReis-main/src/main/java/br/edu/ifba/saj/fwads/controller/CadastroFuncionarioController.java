@@ -37,7 +37,7 @@ public class CadastroFuncionarioController {
         ValidaUsuario validaUsuario = new ValidaUsuario();
 
         try{
-            validaUsuario.validaCadastroFuncionario(new Funcionario(txtNomeFuncionario.getText(), txtLoginFuncionario.   getText(), txtSenhaFuncionario.getText(), txtSetor.getText()));
+            validaUsuario.validaCadastro(new Funcionario(txtNomeFuncionario.getText(), txtLoginFuncionario.   getText(), txtSenhaFuncionario.getText(), txtSetor.getText()));
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Sucesso");
             alert.setHeaderText(null);

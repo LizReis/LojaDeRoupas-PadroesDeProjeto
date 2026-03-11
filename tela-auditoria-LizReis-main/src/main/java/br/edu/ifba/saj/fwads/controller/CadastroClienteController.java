@@ -39,7 +39,7 @@ public class CadastroClienteController {
         ValidaUsuario validaUsuario = new ValidaUsuario();
         
         try{
-            validaUsuario.validaCadastroCliente(new Cliente(txtNomeCliente.getText(), txtLoginCliente.getText(), txtSenhaCliente.getText()));
+            validaUsuario.validaCadastro(new Cliente(txtNomeCliente.getText(), txtLoginCliente.getText(), txtSenhaCliente.getText()));
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Sucesso");
             alert.setHeaderText(null);
