@@ -7,28 +7,21 @@ import br.edu.ifba.saj.fwads.exception.CadastroProdutoException;
 import br.edu.ifba.saj.fwads.exception.ValidaRemocaoException;
 import br.edu.ifba.saj.fwads.exception.ValidarAtualizacaoException;
 import br.edu.ifba.saj.fwads.model.Produto;
+import br.edu.ifba.saj.fwads.negocio.CHAIN_OF_RESPONSABILITY.ProdutoValidationChain;
 
 public class ValidaProduto {
     
     public static final ProdutoDAO daoProdutos = new ProdutoDAO();
 
     //Valida o cadastro de um produto
+    //Utiliza o padrão Chain of Responsability para validar os campos do produto
     public boolean validaCadastroProduto(Produto produto) throws CadastroProdutoException{
-        if(produto.getModelo() == null || produto.getModelo().trim().isEmpty()){
-            throw new CadastroProdutoException("Preencha todos os campos corretamente");
-        }else if(produto.getTamanho() == null || produto.getTamanho().trim().isEmpty()){
-            throw new CadastroProdutoException("Preencha todos os campos corretamente");
-        }else if(produto.getCor() == null || produto.getCor().trim().isEmpty()){
-            throw new CadastroProdutoException("Preencha todos os campos corretamente");
-        }else if(produto.getPreco() <= 0){
-            throw new NumberFormatException("Digite um valor válido para o produto.");
-        }else if(produto.getDepartamento() == null){
-            throw new CadastroProdutoException("Selecione ou crie um departamento antes de cadastrar produto.");
-        }else{
+        ProdutoValidationChain chain = new ProdutoValidationChain();
+        if (chain.validate(produto)) {
             daoProdutos.salvar(produto, SessaoUsuario.getInstance().getFuncionarioLogado());
             return true;
         }
-        
+        return false;
     }
     //-------------------------------------------------------
 
