@@ -11,9 +11,6 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
-
-     
-
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -29,6 +26,12 @@
             <version>17.0.12</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
 
         
     </dependencies>
@@ -41,6 +44,14 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>17</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
             <plugin>

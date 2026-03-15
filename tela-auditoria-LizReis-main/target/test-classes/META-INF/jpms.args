@@ -1,0 +1,4 @@
+--patch-module
+br.edu.ifba.saj.fwads=_
+--add-reads
+br.edu.ifba.saj.fwads=ALL-UNNAMED

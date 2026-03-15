@@ -3,12 +3,9 @@ package br.edu.ifba.saj.fwads.controller;
 import br.edu.ifba.saj.fwads.App;
 import br.edu.ifba.saj.fwads.exception.CriarCarrinhoException;
 import br.edu.ifba.saj.fwads.model.Carrinho;
-import br.edu.ifba.saj.fwads.model.Cliente;
 import br.edu.ifba.saj.fwads.model.Departamento;
 import br.edu.ifba.saj.fwads.model.Produto;
-import br.edu.ifba.saj.fwads.negocio.SessaoUsuario;
-import br.edu.ifba.saj.fwads.negocio.ValidaCarrinhos;
-import br.edu.ifba.saj.fwads.negocio.ValidaProduto;
+import br.edu.ifba.saj.fwads.negocio.facade.CompraFacade;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -54,10 +51,8 @@ public class ProdutosDeDepartamentoController {
     private Departamento departamento;
     //Varivale que armazena a quantidade digitada pelo usuario no textField de cada linha
     private final ObservableMap<Produto, StringProperty> quantidadeMap = FXCollections.observableHashMap();
-    //Instancia de valida carrinhos para chamar metodos
-    private ValidaCarrinhos validaCarrinhos = new ValidaCarrinhos();
-    //variavel que armazena o cliente que estálogado no sistema
-    Cliente clienteLogado = (Cliente) SessaoUsuario.getInstance().getClienteLogado();
+    //Fachada que centraliza o fluxo de compra
+    private final CompraFacade compraFacade = new CompraFacade();
     
     ////Esse set é apenas um método para mudar o departamento quando o cliente seleciona para ver um novo departamento
     public void setDepartamento(Departamento departamento) {
@@ -66,15 +61,8 @@ public class ProdutosDeDepartamentoController {
     }
     //Carrega os produtos do departamento selecionado pelo cliente e mostra nas colunas
     private void carregarProdutosDoDepartamento(){
-        ValidaProduto validaProduto = new ValidaProduto();
-        ObservableList<Produto> todosProdutos = FXCollections.observableArrayList(validaProduto.listarProdutos());
-        ObservableList<Produto> produtosDoDepartamento = FXCollections.observableArrayList();
-
-        for(Produto produtos : todosProdutos){
-            if(produtos.getDepartamento().equals(departamento)){
-                produtosDoDepartamento.add(produtos);
-            }
-        }
+        ObservableList<Produto> produtosDoDepartamento = FXCollections.observableArrayList(
+                compraFacade.listarProdutosDoDepartamento(departamento));
         tabelasDeProdutos.setItems(produtosDoDepartamento);
 
         colunaProdutos.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().descricaoProduto()));
@@ -116,7 +104,9 @@ public class ProdutosDeDepartamentoController {
     void adicionarAoCarrinho(ActionEvent event) {
         Produto produtoSelecionado = tabelasDeProdutos.getSelectionModel().getSelectedItem();
         if (produtoSelecionado != null) {
-            String quantidadeTexto = quantidadeMap.get(produtoSelecionado).get();
+            String quantidadeTexto = quantidadeMap
+                    .computeIfAbsent(produtoSelecionado, p -> new SimpleStringProperty(""))
+                    .get();
                     
             if (quantidadeTexto == null || quantidadeTexto.trim().isEmpty()) {
                 MeuMasterController.exibirAlertaErro("Digite a quantidade antes de adicionar ao carrinho!");
@@ -125,7 +115,7 @@ public class ProdutosDeDepartamentoController {
             
             try {
                 int quantidadeInteger = Integer.parseInt(quantidadeTexto);
-                Carrinho resultado = validaCarrinhos.temCarrinhos(clienteLogado, produtoSelecionado, quantidadeInteger);
+                Carrinho resultado = compraFacade.adicionarProdutoAoCarrinho(produtoSelecionado, quantidadeInteger);
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Sucesso");
                 alert.setHeaderText(null);
@@ -135,18 +125,19 @@ public class ProdutosDeDepartamentoController {
                 MeuMasterController.exibirAlertaErro("Digite um número válido para a quantidade!");
             } catch (CriarCarrinhoException e) {
                 int quantidadeInteger = Integer.parseInt(quantidadeTexto);
-                exibirTelaCarrinhosSelecao(clienteLogado, produtoSelecionado, quantidadeInteger);
-                e.printStackTrace();
+                exibirTelaCarrinhosSelecao(produtoSelecionado, quantidadeInteger);
+            } catch (IllegalStateException e) {
+                MeuMasterController.exibirAlertaErro(e.getMessage());
             }
         }else{
-            MeuMasterController.exibirAlertaErro("Selecione um carrinho.");
+            MeuMasterController.exibirAlertaErro("Selecione um produto.");
         }
 
     }   
     //Esse método é chamado caso o cliente tenha optado por adicionar o produto ao carrinho que ele criou na telinha
     //exibida para selecionar carrinho
-    private void adicionarProdutoAoCarrinho(Cliente cliente, Produto produto, int quantidade, String nomeCarrinho){
-        Carrinho resultado = validaCarrinhos.criarCarrinhoNomeSelecao(clienteLogado, nomeCarrinho, produto, quantidade);
+    private void adicionarProdutoAoCarrinho(Produto produto, int quantidade, String nomeCarrinho){
+        Carrinho resultado = compraFacade.adicionarProdutoAoCarrinho(produto, quantidade, nomeCarrinho);
         if(resultado != null){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Sucesso");
@@ -162,7 +153,7 @@ public class ProdutosDeDepartamentoController {
 
     //Essa janela será exibida caso o cliente tenha carrinhos, então ele tem que selecionar o nome do
     //carrinho que ele quer adicionar o produto ou digitar o nome de um que será criado 
-    private void exibirTelaCarrinhosSelecao(Cliente cliente, Produto produto, int quantidade){
+    private void exibirTelaCarrinhosSelecao(Produto produto, int quantidade){
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Selecionar Carrinho");
         dialog.setHeaderText("Escolha um carrinho ou digite um nome para um novo.");
@@ -172,7 +163,12 @@ public class ProdutosDeDepartamentoController {
         dialog.getDialogPane().getButtonTypes().addAll(adicionarButton, cancelarButton);
 
         ListView<Carrinho> listView = new ListView<>();
-        listView.getItems().addAll(cliente.getCarrinhos());
+        try{
+            listView.getItems().addAll(compraFacade.listarCarrinhosDoClienteLogado());
+        }catch(IllegalStateException e){
+            MeuMasterController.exibirAlertaErro(e.getMessage());
+            return;
+        }
 
         TextField nomeCarrinhoField = new TextField();
         nomeCarrinhoField.setPromptText("Digite o nome do carrinho");
@@ -199,7 +195,7 @@ public class ProdutosDeDepartamentoController {
         //Mostrar e aguardar ação do usuário
         dialog.showAndWait().ifPresent(nomeCarrinho -> {
             if (nomeCarrinho != null && !nomeCarrinho.isEmpty()) {
-                adicionarProdutoAoCarrinho(cliente, produto, quantidade, nomeCarrinho);
+                adicionarProdutoAoCarrinho(produto, quantidade, nomeCarrinho);
             }
         });
     }

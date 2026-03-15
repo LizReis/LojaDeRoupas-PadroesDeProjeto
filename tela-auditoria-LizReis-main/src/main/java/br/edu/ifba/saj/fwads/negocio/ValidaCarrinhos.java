@@ -35,23 +35,19 @@ public class ValidaCarrinhos {
 
     //Cria um carrinho novo com o nome que o cliente digitou na tela que mostra que ele ja tem carrinho
     public Carrinho criarCarrinhoNomeSelecao(Cliente cliente, String nomeCarrinho, Produto produto, int quantidade){
-        if(daoCarrinhos.buscarPorNome(nomeCarrinho).isPresent()){
-            for(Carrinho carrinho : daoCarrinhos.buscarTodos()){
-                if(carrinho.getNome().equals(nomeCarrinho)){
-                    carrinho.adicionarItem(new ItemCompra(produto, quantidade));
-
-                    return carrinho;
-                }
+        for(Carrinho carrinho : cliente.getCarrinhos()){
+            if(carrinho.getNome().equalsIgnoreCase(nomeCarrinho)){
+                carrinho.adicionarItem(new ItemCompra(produto, quantidade));
+                return carrinho;
             }
-        }else{
-            Carrinho novoCarrinho = cliente.criarCarrinho(nomeCarrinho);
-            daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getInstance().getFuncionarioLogado());
-
-            novoCarrinho.adicionarItem(new ItemCompra(produto, quantidade));
-
-            return novoCarrinho;
         }
-        return null;
+
+        Carrinho novoCarrinho = cliente.criarCarrinho(nomeCarrinho);
+        daoCarrinhos.salvar(novoCarrinho, SessaoUsuario.getInstance().getFuncionarioLogado());
+
+        novoCarrinho.adicionarItem(new ItemCompra(produto, quantidade));
+
+        return novoCarrinho;
     }
 
     //Ver carrinho selecionado pelo usuário
@@ -103,19 +99,18 @@ public class ValidaCarrinhos {
     public Carrinho removerItemCarrinho(ItemCompra item) throws ValidaRemocaoException, RemoverCarrinhoException{
         Optional<Carrinho> carrinho = daoCarrinhos.buscarPorItem(item);
 
-        if(carrinho.get() != null){
+        if(carrinho.isPresent()){
+            Carrinho carrinhoAtual = carrinho.get();
+            carrinhoAtual.removerItem(item);
+            carrinhoAtual.setValorTotal();
 
-            carrinho.get().removerItem(item);
-            carrinho.get().setValorTotal();
-
-            if(carrinho.get().getValorTotal() == 0){
-                removerCarrinhoLista(carrinho.get());
+            if(carrinhoAtual.getValorTotal() == 0){
+                removerCarrinhoLista(carrinhoAtual);
             }
 
-            return carrinho.get();
-        }else{
-            throw new ValidaRemocaoException("Este item não tem no carrinho.");
+            return carrinhoAtual;
         }
+        throw new ValidaRemocaoException("Este item não tem no carrinho.");
     }
 
     //Método de Finalizar Compra do carrinho

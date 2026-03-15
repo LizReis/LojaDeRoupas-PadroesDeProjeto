@@ -22,7 +22,7 @@ import br.edu.ifba.saj.fwads.exception.ValidaRemocaoException;
 import br.edu.ifba.saj.fwads.exception.ValidarFinalizarCompraException;
 import br.edu.ifba.saj.fwads.model.Carrinho;
 import br.edu.ifba.saj.fwads.model.ItemCompra;
-import br.edu.ifba.saj.fwads.negocio.ValidaCarrinhos;
+import br.edu.ifba.saj.fwads.negocio.facade.CompraFacade;
 
 
 public class CarrinhoDeComprasController {
@@ -56,8 +56,8 @@ public class CarrinhoDeComprasController {
 
      //Variável recebe o qual carrinho o funcionário selecionou na tabela para atualizar
     private Carrinho carrinho;
-    //Instancia do Valida carrinhos para chamar métodos 
-    ValidaCarrinhos validaCarrinhos = new ValidaCarrinhos();
+    //Fachada que centraliza o fluxo de compra
+    private final CompraFacade compraFacade = new CompraFacade();
     
     //Esse set é apenas um método para mudar o carrinho atual quando o cliente seleciona seu carrinho
     public void setCarrinho(Carrinho carrinho) throws CarrinhoVazioException {
@@ -68,7 +68,7 @@ public class CarrinhoDeComprasController {
 
     //Método que carrega os itens que o cliente tem no carrinho
     private void carregarItensCarrinho() throws CarrinhoVazioException{
-        ObservableList<ItemCompra> itensCompra = FXCollections.observableArrayList(validaCarrinhos.pegarItens(carrinho));
+        ObservableList<ItemCompra> itensCompra = FXCollections.observableArrayList(compraFacade.listarItensDoCarrinho(carrinho));
 
         tabelaCarrinhoCompras.setItems(itensCompra);
         //Colunas que pegam os atributos de cada item de forma dinâmica
@@ -118,7 +118,7 @@ public class CarrinhoDeComprasController {
     @FXML
     void finalizarCompra(ActionEvent event) throws RemoverCarrinhoException, ValidarFinalizarCompraException {
         try{
-            validaCarrinhos.finalizarCompra(carrinho);
+            compraFacade.finalizarCompra(carrinho);
             App.setRoot("controller/TelaSucesso.fxml");
         }catch(ValidarFinalizarCompraException e){
             MeuMasterController.exibirAlertaErro(e.getMessage());
@@ -134,7 +134,7 @@ public class CarrinhoDeComprasController {
 
         if(itemSelecionado != null){
             try{
-                Carrinho carrinhoAtual = validaCarrinhos.removerItemCarrinho(itemSelecionado);
+                Carrinho carrinhoAtual = compraFacade.removerItemDoCarrinho(itemSelecionado);
 
                 tabelaCarrinhoCompras.getItems().remove(itemSelecionado);
                 lblValorTotalCompra.setText(String.format("R$ %.2f", carrinhoAtual.getValorTotal()));
