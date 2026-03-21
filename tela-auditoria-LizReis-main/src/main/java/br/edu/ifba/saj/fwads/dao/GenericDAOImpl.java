@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import br.edu.ifba.saj.fwads.exception.AcessoNegadoException;
 import br.edu.ifba.saj.fwads.model.AbstractModel;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 

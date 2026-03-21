@@ -3,6 +3,7 @@ package br.edu.ifba.saj.fwads.dao;
 import java.util.List;
 import java.util.Optional;
 
+import br.edu.ifba.saj.fwads.exception.AcessoNegadoException;
 import br.edu.ifba.saj.fwads.model.AbstractModel;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 
@@ -11,7 +12,7 @@ public interface GenericDAO<T extends AbstractModel<ID>, ID>{
     ID salvar(T entidade, Optional<Funcionario> createdBy);
     void atualizar(T entidadeAtual, Optional<Funcionario> UpdatedBy);
     T buscarPorID(ID id);
-    void deletar(ID id);
+    void deletar(ID id) throws AcessoNegadoException;
     ID gerarNovoId();
     List<T> buscarTodos();
 }
