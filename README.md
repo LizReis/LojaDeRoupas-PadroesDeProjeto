@@ -68,6 +68,9 @@ O código-fonte segue o padrão de arquitetura **MVC** (Model-View-Controller) e
 
 ## 🛠️ Autores
 
-* **Liz Reis** - *Desenvolvimento e implementação dos Padrões de Projeto.*
+* **Liz Reis** - *Desenvolvedora do código POO completo + implementação dos Padrões de Projeto.*
+* **Altimar Junior** - *Implementação dos Padrões de Projeto.*
+* **João Soares** - *Implementação dos Padrões de Projeto.*
+* **Anna Victória** - *Implementação dos Padrões de Projeto.*
 
 ***
